@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="navbar">
+<link rel="stylesheet" type="text/css"
+href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+<head>
+<meta charset="utf-8">
+<title>Ajout des Musiques</title>
+</head>
+<body>
+<div layout:fragment="Mynavbar">
+<div class="container mt-5">
+<div class="card">
+<div class="card-header" th:if="${mode=='new'}"> Ajout des Musiques</div>
+ <div class="card-header" th:if="${mode=='edit'}"> Modification des Musiques</div>
+<div class="card-body">
+ <form th:action="@{saveMusique}" method="post">
+ <div class="form-group">
+<label class="control-label" hidden>ID Musique :</label>
+<input type="hidden" name="idMusique" class="form-control"
+th:value="${musique.idMusique}" />
+ </div>
+
+<div class="form-group">
+ <label class="control-label">Titre :</label>
+ <input type="text" name="nomMusique" class="form-control" th:value="${musique.nomMusique}" />
+<span th:errors= ${musique.nomMusique} class="text-danger"> </span>
+</div>
+<div class="form-group">
+<label class="control-label">Prix Musique :</label>
+<input type="text" name="prixMusique" class="form-control" th:value="${musique.prixMusique}" />
+<span th:errors=${musique.prixMusique} class="text-danger"> </span>
+</div>
+<div class="form-group">
+<label class="control-label">Date creation :</label>
+<input type="date" name="dateCreation" class="form-control" th:value="${musique.dateCreation}"/>
+<span th:errors=${musique.dateCreation} class="text-danger"> </span>
+</div>
+<div th:if="${mode!='edit'}">
+<div class="form-group"> 
+<label class="control-label">Style :</label>
+ <select name="style" class="form-control" required>
+ <option th:each="c : ${styles}" th:value="${c.idStyle}" th:text="${c.nomStyle}"></option>
+ </select>
+</div>
+</div>
+<div th:if="${mode=='edit'}">
+<div class="form-group"> 
+<label class="control-label">Style :</label>
+ <select name="Style" class="form-control" required>
+  <option th:value="${musique.style.idStyle}" th:text="${musique.style.nomStyle}" selected></option>
+ <option th:each="c : ${styles}" th:value="${c.idStyle}" th:text="${c.nomStyle}"></option>
+ </select>
+</div>
+</div>
+ <div style="text-align:center;margin-top:20px;">
+  <a th:href="@{listeMusique}" ><button type="button" class="btn btn-secondary">Annuler</button></a>
+ <button type="submit" class="btn btn-primary">Valider</button>
+ </div>
+ </div>
+</form>
+</div>
+ </div>
+ </div>
+ </div>
+</body>
+</html>

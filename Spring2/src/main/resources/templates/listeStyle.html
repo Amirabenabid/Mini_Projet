@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="navbar" xmlns:sec=https://www.thymeleaf.org/thymeleaf-extras-springsecurity5>
+<link rel="stylesheet" type="text/css" href="webjars/bootstrap/4.0.0/css/bootstrap.min.css" />
+<head>
+<meta charset="utf-8">
+<title>Liste des Styles</title>
+</head>
+<body>
+    <div layout:fragment="Mynavbar">
+    <div class="container mt-5">
+    <div class="card">
+     <div class="card-header">
+    <h3> Liste des Styles</h3>
+     </div>
+     <div class="card-body"> 
+     <table class="table table-striped" style="text-align: center;">
+     <tr>
+     <th>ID</th><th>Nom Style</th><th>Description Style</th><th sec:authorize="hasRole('ADMIN')" colspan="2">Actions</th>
+     </tr> 
+     <tr th:each="c:${styles}">
+     <td th:text="${c.idStyle}"></td>
+     <td th:text="${c.nomStyle}"></td>
+        <td th:text="${c.descriptionStyle}"></td>
+     <td sec:authorize="hasRole('ADMIN')"><a class="btn btn-danger" onclick="return confirm('Etes-vous sur ?')" th:href="@{supprimerStyle(id=${c.idStyle})}">Supprimer</a></td>
+   <td sec:authorize="hasRole('ADMIN')"><a class="btn btn-success" th:href="@{modifierStyle(id=${c.idStyle})}">Editer</a></td>
+     </tr> 
+     </table>
+     
+     </div>
+    </div>
+    </div>
+    </div>
+    </body>
+</html>
